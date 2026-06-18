@@ -15,6 +15,7 @@ Update this file when an important decision, constraint, milestone, or handoff s
 - Go API foundation has been implemented with config loading, structured logging, graceful shutdown, and `GET /api/health`.
 - Initial database migration runner and TimescaleDB schema have been implemented.
 - Symbol management has been implemented across domain, application service, PostgreSQL repository, and HTTP API.
+- Candle storage and query API has been implemented across domain, application service, PostgreSQL repository, and HTTP API.
 - Task 1 has been committed as `fd4f633` with message `chore: add project scaffold`.
 - Task 2 local infrastructure has been implemented and verified healthy with Docker Compose.
 
@@ -75,7 +76,7 @@ Primary documents:
 
 Next recommended task:
 
-- Commit `Task 5: Symbol Management`, then start `Task 6: Candle Storage And Query API` from `docs/runbooks/implementation-tasks.md`.
+- Commit `Task 6: Candle Storage And Query API`, then start `Task 7: Market Data Sync Worker` from `docs/runbooks/implementation-tasks.md`.
 
 Current scaffold exists:
 
@@ -117,3 +118,6 @@ Before implementing code:
 - Committed Task 4 as `e48c044`.
 - Implemented Task 5 symbol management.
 - Verified Task 5 with `go test ./...` and smoke tested `POST /api/symbols` plus `GET /api/symbols`.
+- Committed Task 5 as `b007a57`.
+- Implemented Task 6 candle storage and query API.
+- Verified Task 6 with `go test ./...` and smoke tested `GET /api/candles`.

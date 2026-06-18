@@ -37,9 +37,13 @@ func main() {
 	}
 
 	symbols := marketdata.NewSymbolService(postgres.NewSymbolRepository(db), uuid.NewString)
+	candles := marketdata.NewCandleService(postgres.NewCandleRepository(db))
 	server := &http.Server{
-		Addr:    cfg.HTTPAddr,
-		Handler: httpadapter.NewRouter(httpadapter.WithSymbolService(symbols)),
+		Addr: cfg.HTTPAddr,
+		Handler: httpadapter.NewRouter(
+			httpadapter.WithSymbolService(symbols),
+			httpadapter.WithCandleService(candles),
+		),
 	}
 
 	errs := make(chan error, 1)

@@ -157,13 +157,13 @@
 - Modify: `services/api/internal/adapters/http/`
 - Modify: `services/api/internal/adapters/postgres/`
 
-- [ ] Add `Candle` domain entity.
-- [ ] Add candle repository port.
-- [ ] Add bulk upsert.
-- [ ] Add time-range query.
-- [ ] Add `GET /api/candles`.
-- [ ] Add integration tests.
-- [ ] Commit with message `feat(market): add candle storage and query api`.
+- [x] Add `Candle` domain entity.
+- [x] Add candle repository port.
+- [x] Add bulk upsert.
+- [x] Add time-range query.
+- [x] Add `GET /api/candles`.
+- [x] Add integration tests.
+- [x] Commit with message `feat(market): add candle storage and query api`.
 
 ### Task 7: Market Data Sync Worker
 
