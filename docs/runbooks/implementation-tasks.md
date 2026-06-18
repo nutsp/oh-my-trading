@@ -190,13 +190,13 @@
 - Create: `apps/web/features/`
 - Create: `apps/web/lib/`
 
-- [ ] Initialize Next.js app.
-- [ ] Add dashboard layout.
-- [ ] Add navigation for Dashboard, Markets, Signals, Risk, Journal, Backtests, Agent, Settings.
-- [ ] Add API client wrapper.
-- [ ] Add basic visual system.
-- [ ] Add smoke test.
-- [ ] Commit with message `feat(web): add dashboard shell`.
+- [x] Initialize Next.js app.
+- [x] Add dashboard layout.
+- [x] Add navigation for Dashboard, Markets, Signals, Risk, Journal, Backtests, Agent, Settings.
+- [x] Add API client wrapper.
+- [x] Add basic visual system.
+- [x] Add smoke test.
+- [x] Commit with message `feat(web): add dashboard shell`.
 
 ### Task 9: Market Chart Page
 

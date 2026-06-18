@@ -13,6 +13,7 @@ node_modules/
 .next/
 out/
 dist/
+tsconfig.tsbuildinfo
 
 # Go
 bin/
@@ -21,4 +22,3 @@ coverage.out
 # Local worktrees
 .worktrees/
 worktrees/
-
