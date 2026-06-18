@@ -108,13 +108,13 @@
 - Create: `services/api/internal/platform/logger/`
 - Create: `services/api/internal/adapters/http/`
 
-- [ ] Initialize Go module.
-- [ ] Add config loader.
-- [ ] Add structured logger.
-- [ ] Add `GET /api/health`.
-- [ ] Add graceful shutdown.
-- [ ] Add API smoke test.
-- [ ] Commit with message `feat(api): add service foundation`.
+- [x] Initialize Go module.
+- [x] Add config loader.
+- [x] Add structured logger.
+- [x] Add `GET /api/health`.
+- [x] Add graceful shutdown.
+- [x] Add API smoke test.
+- [x] Commit with message `feat(api): add service foundation`.
 
 ### Task 4: Database Migrations
 

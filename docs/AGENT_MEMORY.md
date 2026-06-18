@@ -12,7 +12,7 @@ Update this file when an important decision, constraint, milestone, or handoff s
 - Core documentation has been split into product, architecture, database, API, and implementation task files.
 - Root `AGENTS.md` defines project-specific AI agent behavior.
 - Root `README.md` has been created as the project entrypoint.
-- No application code has been implemented yet.
+- Go API foundation has been implemented with config loading, structured logging, graceful shutdown, and `GET /api/health`.
 - Task 1 has been committed as `fd4f633` with message `chore: add project scaffold`.
 - Task 2 local infrastructure has been implemented and verified healthy with Docker Compose.
 
@@ -73,7 +73,7 @@ Primary documents:
 
 Next recommended task:
 
-- Start `Task 3: Go API Foundation` from `docs/runbooks/implementation-tasks.md`.
+- Commit `Task 3: Go API Foundation`, then start `Task 4: Database Migrations` from `docs/runbooks/implementation-tasks.md`.
 
 Current scaffold exists:
 
@@ -108,3 +108,4 @@ Before implementing code:
 - Added Task 2 Docker Compose and `.env.example`.
 - Changed local PostgreSQL host port to `15432` because port `5432` was already allocated.
 - Verified Task 2 with `docker compose -f deployments/docker-compose.yml up -d`; TimescaleDB, Redis, and RabbitMQ were healthy.
+- Implemented Task 3 Go API foundation; `go test ./...` passed in `services/api`.
