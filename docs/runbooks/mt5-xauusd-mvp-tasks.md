@@ -57,7 +57,7 @@ Integrate MT5 for XAUUSD only through a Python bridge and Go ingest APIs, then s
 - [x] Add `GET /api/mt5/status`.
 - [x] Add latest account and positions read endpoints.
 - [x] Run `go test ./internal/adapters/http ./...`.
-- [ ] Commit with message `feat(mt5): add ingest api`.
+- [x] Commit with message `feat(mt5): add ingest api`.
 
 ## Task 4: Python MT5 Bridge Skeleton
 
@@ -69,11 +69,11 @@ Integrate MT5 for XAUUSD only through a Python bridge and Go ingest APIs, then s
 - Create: `bridges/mt5-python/src/mt5_bridge/`
 - Test: `bridges/mt5-python/tests/`
 
-- [ ] Add Python project skeleton.
-- [ ] Add config for Go API URL, symbol `XAUUSD`, timeframes, and polling intervals.
-- [ ] Add payload builders with unit tests.
-- [ ] Add dry-run mode that prints payloads without connecting to MT5.
-- [ ] Add `MetaTrader5` adapter boundary but keep it replaceable in tests.
+- [x] Add Python project skeleton.
+- [x] Add config for Go API URL, symbol `XAUUSD`, timeframes, and polling intervals.
+- [x] Add payload builders with unit tests.
+- [x] Add dry-run mode that prints payloads without connecting to MT5.
+- [x] Add `MetaTrader5` adapter boundary but keep it replaceable in tests.
 - [ ] Commit with message `feat(mt5): add python bridge skeleton`.
 
 ## Task 5: Bridge Status Dashboard

@@ -1,0 +1,19 @@
+[project]
+name = "oh-my-trading-mt5-bridge"
+version = "0.1.0"
+description = "Read-only MT5 to Go API bridge for the XAUUSD MVP."
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+mt5 = ["MetaTrader5>=5.0"]
+
+[project.scripts]
+omt-mt5-bridge = "mt5_bridge.__main__:main"
+
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]

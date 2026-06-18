@@ -19,6 +19,11 @@ tsconfig.tsbuildinfo
 bin/
 coverage.out
 
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
 # Local worktrees
 .worktrees/
 worktrees/
