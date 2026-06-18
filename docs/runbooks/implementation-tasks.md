@@ -140,13 +140,13 @@
 - Modify: `services/api/internal/adapters/http/`
 - Modify: `services/api/internal/adapters/postgres/`
 
-- [ ] Add `Symbol` domain entity.
-- [ ] Add symbol repository port.
-- [ ] Add PostgreSQL repository adapter.
-- [ ] Add `GET /api/symbols`.
-- [ ] Add `POST /api/symbols`.
-- [ ] Add unit and integration tests.
-- [ ] Commit with message `feat(market): add symbol management`.
+- [x] Add `Symbol` domain entity.
+- [x] Add symbol repository port.
+- [x] Add PostgreSQL repository adapter.
+- [x] Add `GET /api/symbols`.
+- [x] Add `POST /api/symbols`.
+- [x] Add unit and integration tests.
+- [x] Commit with message `feat(market): add symbol management`.
 
 ### Task 6: Candle Storage And Query API
 
