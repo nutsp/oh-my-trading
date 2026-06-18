@@ -173,13 +173,13 @@
 - Create: `services/api/internal/adapters/marketdata/`
 - Create: `services/api/internal/adapters/rabbitmq/`
 
-- [ ] Define market data provider interface.
-- [ ] Implement first provider adapter.
-- [ ] Add candle sync job.
-- [ ] Publish sync requests through RabbitMQ.
-- [ ] Store fetched candles in TimescaleDB.
-- [ ] Add fake-provider worker test.
-- [ ] Commit with message `feat(worker): add market data sync`.
+- [x] Define market data provider interface.
+- [x] Implement first provider adapter.
+- [x] Add candle sync job.
+- [x] Publish sync requests through RabbitMQ.
+- [x] Store fetched candles in TimescaleDB.
+- [x] Add fake-provider worker test.
+- [x] Commit with message `feat(worker): add market data sync`.
 
 ### Task 8: Next.js Dashboard Shell
 

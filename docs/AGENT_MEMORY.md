@@ -16,6 +16,7 @@ Update this file when an important decision, constraint, milestone, or handoff s
 - Initial database migration runner and TimescaleDB schema have been implemented.
 - Symbol management has been implemented across domain, application service, PostgreSQL repository, and HTTP API.
 - Candle storage and query API has been implemented across domain, application service, PostgreSQL repository, and HTTP API.
+- Market data sync worker foundation has been implemented with a provider interface, synthetic provider, RabbitMQ publisher, and worker consumer.
 - Task 1 has been committed as `fd4f633` with message `chore: add project scaffold`.
 - Task 2 local infrastructure has been implemented and verified healthy with Docker Compose.
 
@@ -76,7 +77,7 @@ Primary documents:
 
 Next recommended task:
 
-- Commit `Task 6: Candle Storage And Query API`, then start `Task 7: Market Data Sync Worker` from `docs/runbooks/implementation-tasks.md`.
+- Commit `Task 7: Market Data Sync Worker`, then start `Task 8: Next.js Dashboard Shell` from `docs/runbooks/implementation-tasks.md`.
 
 Current scaffold exists:
 
@@ -121,3 +122,6 @@ Before implementing code:
 - Committed Task 5 as `b007a57`.
 - Implemented Task 6 candle storage and query API.
 - Verified Task 6 with `go test ./...` and smoke tested `GET /api/candles`.
+- Committed Task 6 as `7f102cc`.
+- Implemented Task 7 market data sync worker foundation.
+- Verified Task 7 with `go test ./...` and smoke tested RabbitMQ publish -> worker sync -> TimescaleDB candles -> `GET /api/candles`.
