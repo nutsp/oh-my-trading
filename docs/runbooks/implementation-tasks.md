@@ -123,13 +123,13 @@
 - Create: `services/api/migrations/`
 - Create: `services/api/internal/adapters/postgres/`
 
-- [ ] Add migration tool.
-- [ ] Add symbols migration.
-- [ ] Add candles migration.
-- [ ] Enable TimescaleDB extension.
-- [ ] Convert candles to hypertable.
-- [ ] Add migration test.
-- [ ] Commit with message `feat(db): add symbols and candles schema`.
+- [x] Add migration tool.
+- [x] Add symbols migration.
+- [x] Add candles migration.
+- [x] Enable TimescaleDB extension.
+- [x] Convert candles to hypertable.
+- [x] Add migration test.
+- [x] Commit with message `feat(db): add symbols and candles schema`.
 
 ### Task 5: Symbol Management
 

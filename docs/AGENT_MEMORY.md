@@ -13,6 +13,7 @@ Update this file when an important decision, constraint, milestone, or handoff s
 - Root `AGENTS.md` defines project-specific AI agent behavior.
 - Root `README.md` has been created as the project entrypoint.
 - Go API foundation has been implemented with config loading, structured logging, graceful shutdown, and `GET /api/health`.
+- Initial database migration runner and TimescaleDB schema have been implemented.
 - Task 1 has been committed as `fd4f633` with message `chore: add project scaffold`.
 - Task 2 local infrastructure has been implemented and verified healthy with Docker Compose.
 
@@ -73,7 +74,7 @@ Primary documents:
 
 Next recommended task:
 
-- Commit `Task 3: Go API Foundation`, then start `Task 4: Database Migrations` from `docs/runbooks/implementation-tasks.md`.
+- Commit `Task 4: Database Migrations`, then start `Task 5: Symbol Management` from `docs/runbooks/implementation-tasks.md`.
 
 Current scaffold exists:
 
@@ -109,3 +110,6 @@ Before implementing code:
 - Changed local PostgreSQL host port to `15432` because port `5432` was already allocated.
 - Verified Task 2 with `docker compose -f deployments/docker-compose.yml up -d`; TimescaleDB, Redis, and RabbitMQ were healthy.
 - Implemented Task 3 Go API foundation; `go test ./...` passed in `services/api`.
+- Committed Task 3 as `58ae57d`.
+- Implemented Task 4 migration runner and initial schema for TimescaleDB extension, `symbols`, and `candles` hypertable.
+- Verified Task 4 with `go test ./...` in `services/api`.
