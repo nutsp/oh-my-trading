@@ -84,6 +84,19 @@ Once Task 2 is implemented, local infrastructure should run with:
 docker compose -f deployments/docker-compose.yml up -d
 ```
 
+You can also run the API in mock mode (no database dependency) for frontend display work:
+
+```bash
+cd services/api
+OMT_API_MOCK_MODE=true go run ./cmd/api
+```
+
+Mock mode serves deterministic sample data for:
+
+- `GET /api/symbols`
+- `GET /api/candles`
+- `GET /api/indicators`
+
 ## Implementation Status
 
 Current phase: planning and scaffold.

@@ -103,13 +103,186 @@ Response:
   "symbol": "BTCUSD",
   "timeframe": "4h",
   "series": {
-    "ema20": [],
-    "ema50": [],
-    "rsi14": [],
-    "macd": [],
-    "atr14": []
+    "ema20": [
+      {
+        "timestamp": "2026-01-01T08:00:00Z",
+        "value": 2308.2
+      }
+    ],
+    "ema50": [
+      {
+        "timestamp": "2026-01-01T08:00:00Z",
+        "value": 2287.4
+      }
+    ],
+    "rsi14": [
+      {
+        "timestamp": "2026-01-01T08:00:00Z",
+        "value": 58.1
+      }
+    ],
+    "macd": [
+      {
+        "timestamp": "2026-01-01T08:00:00Z",
+        "macd": 6.2,
+        "signal": 5.7,
+        "histogram": 0.5
+      }
+    ],
+    "atr14": [
+      {
+        "timestamp": "2026-01-01T08:00:00Z",
+        "value": 44.6
+      }
+    ]
   }
 }
+```
+
+## MT5 Read-Only Ingest
+
+The first MT5 MVP is XAUUSD-only and read-only. These endpoints must not execute orders.
+
+### MT5 Heartbeat
+
+```http
+POST /api/mt5/heartbeat
+```
+
+Request:
+
+```json
+{
+  "bridgeId": "local-mt5",
+  "terminal": "MetaTrader 5",
+  "accountLogin": "12345678",
+  "server": "Broker-Demo",
+  "status": "healthy",
+  "sentAt": "2026-06-18T11:00:00Z"
+}
+```
+
+### MT5 Tick Ingest
+
+```http
+POST /api/mt5/ticks
+```
+
+Request:
+
+```json
+{
+  "symbol": "XAUUSD",
+  "bid": 2325.42,
+  "ask": 2325.62,
+  "last": 2325.52,
+  "volume": 12,
+  "time": "2026-06-18T11:00:00Z"
+}
+```
+
+### MT5 Candle Ingest
+
+```http
+POST /api/mt5/candles
+```
+
+Request:
+
+```json
+{
+  "symbol": "XAUUSD",
+  "timeframe": "1m",
+  "source": "mt5-python-bridge",
+  "candles": [
+    {
+      "timestamp": "2026-06-18T11:00:00Z",
+      "open": 2320.1,
+      "high": 2328.3,
+      "low": 2318.6,
+      "close": 2325.5,
+      "volume": 12345
+    }
+  ]
+}
+```
+
+### MT5 Account Snapshot
+
+```http
+POST /api/mt5/account-snapshot
+```
+
+Request:
+
+```json
+{
+  "accountLogin": "12345678",
+  "currency": "USD",
+  "balance": 10000,
+  "equity": 10080,
+  "margin": 400,
+  "freeMargin": 9680,
+  "marginLevel": 2520,
+  "time": "2026-06-18T11:00:00Z"
+}
+```
+
+### MT5 Positions Snapshot
+
+```http
+POST /api/mt5/positions
+```
+
+Request:
+
+```json
+{
+  "accountLogin": "12345678",
+  "positions": [
+    {
+      "ticket": "987654321",
+      "symbol": "XAUUSD",
+      "side": "buy",
+      "volume": 0.1,
+      "openPrice": 2320.1,
+      "stopLoss": 2310,
+      "takeProfit": 2340,
+      "profit": 55,
+      "openedAt": "2026-06-18T10:00:00Z"
+    }
+  ],
+  "time": "2026-06-18T11:00:00Z"
+}
+```
+
+### MT5 Status
+
+```http
+GET /api/mt5/status
+```
+
+Response:
+
+```json
+{
+  "bridgeId": "local-mt5",
+  "status": "healthy",
+  "lastHeartbeatAt": "2026-06-18T11:00:00Z",
+  "stale": false
+}
+```
+
+### Latest MT5 Account
+
+```http
+GET /api/mt5/account/latest
+```
+
+### Latest MT5 Positions
+
+```http
+GET /api/mt5/positions/latest
 ```
 
 ## Analysis And Signals
@@ -478,4 +651,3 @@ Event:
   "error": "AI provider timeout"
 }
 ```
-

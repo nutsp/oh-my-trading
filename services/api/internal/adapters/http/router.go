@@ -18,9 +18,14 @@ type candleService interface {
 	ListCandles(ctx context.Context, query market.CandleQuery) ([]market.Candle, error)
 }
 
+type indicatorService interface {
+	ListIndicators(ctx context.Context, query market.IndicatorQuery) (market.IndicatorSeries, error)
+}
+
 type routerConfig struct {
-	symbols symbolService
-	candles candleService
+	symbols    symbolService
+	candles    candleService
+	indicators indicatorService
 }
 
 type Option func(*routerConfig)
@@ -37,6 +42,12 @@ func WithCandleService(service candleService) Option {
 	}
 }
 
+func WithIndicatorService(service indicatorService) Option {
+	return func(cfg *routerConfig) {
+		cfg.indicators = service
+	}
+}
+
 func NewRouter(options ...Option) http.Handler {
 	var cfg routerConfig
 	for _, option := range options {
@@ -47,6 +58,7 @@ func NewRouter(options ...Option) http.Handler {
 	mux.HandleFunc("/api/health", healthHandler)
 	mux.HandleFunc("/api/symbols", symbolsHandler(cfg.symbols))
 	mux.HandleFunc("/api/candles", candlesHandler(cfg.candles))
+	mux.HandleFunc("/api/indicators", indicatorsHandler(cfg.indicators))
 	return mux
 }
 
@@ -226,6 +238,102 @@ func mapCandles(candles []market.Candle) []candleResponse {
 			Low:       candle.Low,
 			Close:     candle.Close,
 			Volume:    candle.Volume,
+		})
+	}
+	return response
+}
+
+type indicatorPointResponse struct {
+	Timestamp string  `json:"timestamp"`
+	Value     float64 `json:"value"`
+}
+
+type macdPointResponse struct {
+	Timestamp string  `json:"timestamp"`
+	MACD      float64 `json:"macd"`
+	Signal    float64 `json:"signal"`
+	Histogram float64 `json:"histogram"`
+}
+
+type indicatorSeriesPayload struct {
+	EMA20 []indicatorPointResponse `json:"ema20"`
+	EMA50 []indicatorPointResponse `json:"ema50"`
+	RSI14 []indicatorPointResponse `json:"rsi14"`
+	MACD  []macdPointResponse      `json:"macd"`
+	ATR14 []indicatorPointResponse `json:"atr14"`
+}
+
+type indicatorResponse struct {
+	Symbol    string                 `json:"symbol"`
+	Timeframe string                 `json:"timeframe"`
+	Series    indicatorSeriesPayload `json:"series"`
+}
+
+func indicatorsHandler(service indicatorService) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		if service == nil {
+			http.Error(w, "indicator service is not configured", http.StatusNotImplemented)
+			return
+		}
+		if r.Method != http.MethodGet {
+			w.WriteHeader(http.StatusMethodNotAllowed)
+			return
+		}
+
+		values := r.URL.Query()
+		symbol := values.Get("symbol")
+		timeframe := values.Get("timeframe")
+		if symbol == "" || timeframe == "" {
+			http.Error(w, "symbol and timeframe are required", http.StatusBadRequest)
+			return
+		}
+
+		series, err := service.ListIndicators(r.Context(), market.IndicatorQuery{
+			SymbolCode: symbol,
+			Timeframe:  timeframe,
+		})
+		if err != nil {
+			http.Error(w, "list indicators", http.StatusInternalServerError)
+			return
+		}
+
+		writeJSON(w, http.StatusOK, mapIndicatorResponse(series))
+	}
+}
+
+func mapIndicatorResponse(series market.IndicatorSeries) indicatorResponse {
+	return indicatorResponse{
+		Symbol:    series.SymbolCode,
+		Timeframe: series.Timeframe,
+		Series: indicatorSeriesPayload{
+			EMA20: mapIndicatorPoints(series.EMA20),
+			EMA50: mapIndicatorPoints(series.EMA50),
+			RSI14: mapIndicatorPoints(series.RSI14),
+			MACD:  mapMACDPoints(series.MACD),
+			ATR14: mapIndicatorPoints(series.ATR14),
+		},
+	}
+}
+
+func mapIndicatorPoints(points []market.IndicatorPoint) []indicatorPointResponse {
+	response := make([]indicatorPointResponse, 0, len(points))
+	for _, point := range points {
+		response = append(response, indicatorPointResponse{
+			Timestamp: point.Timestamp.UTC().Format(time.RFC3339),
+			Value:     point.Value,
+		})
+	}
+	return response
+}
+
+func mapMACDPoints(points []market.MACDPoint) []macdPointResponse {
+	response := make([]macdPointResponse, 0, len(points))
+	for _, point := range points {
+		response = append(response, macdPointResponse{
+			Timestamp: point.Timestamp.UTC().Format(time.RFC3339),
+			MACD:      point.MACD,
+			Signal:    point.Signal,
+			Histogram: point.Histogram,
 		})
 	}
 	return response

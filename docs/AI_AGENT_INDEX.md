@@ -24,11 +24,14 @@ Read these documents in order:
 
 1. [Agent Guide](../AGENTS.md)
 2. [Agent Memory](./AGENT_MEMORY.md)
-3. [Product Plan](./product/ai-trading-agent-dashboard-plan.md)
-4. [System Overview](./architecture/system-overview.md)
-5. [Database Design](./architecture/database.md)
-6. [API Spec](../packages/shared/openapi/api-spec.md)
-7. [Implementation Tasks](./runbooks/implementation-tasks.md)
+3. [MT5 XAUUSD MVP](./product/mt5-xauusd-mvp.md)
+4. [MT5 Integration Architecture](./architecture/mt5-integration.md)
+5. [Product Plan](./product/ai-trading-agent-dashboard-plan.md)
+6. [System Overview](./architecture/system-overview.md)
+7. [Database Design](./architecture/database.md)
+8. [API Spec](../packages/shared/openapi/api-spec.md)
+9. [MT5 XAUUSD MVP Tasks](./runbooks/mt5-xauusd-mvp-tasks.md)
+10. [Implementation Tasks](./runbooks/implementation-tasks.md)
 
 ## Repository Map
 
@@ -65,11 +68,13 @@ Use this table to choose the right document before editing.
 | Work type | Read first |
 | --- | --- |
 | Resuming prior work | [Agent Memory](./AGENT_MEMORY.md) |
+| Current MVP scope | [MT5 XAUUSD MVP](./product/mt5-xauusd-mvp.md) |
+| MT5 bridge or ingest work | [MT5 Integration Architecture](./architecture/mt5-integration.md) |
 | Product or roadmap changes | [Product Plan](./product/ai-trading-agent-dashboard-plan.md) |
 | Backend architecture changes | [System Overview](./architecture/system-overview.md) |
 | Database schema or migrations | [Database Design](./architecture/database.md) |
 | API handlers or frontend API client | [API Spec](../packages/shared/openapi/api-spec.md) |
-| Feature implementation order | [Implementation Tasks](./runbooks/implementation-tasks.md) |
+| Current feature implementation order | [MT5 XAUUSD MVP Tasks](./runbooks/mt5-xauusd-mvp-tasks.md) |
 | Deployment or local infrastructure | [Implementation Tasks](./runbooks/implementation-tasks.md) |
 
 ## Current Build Strategy
@@ -87,7 +92,7 @@ Do not start with microservices. Split market ingestion, agent runtime, and exec
 
 ## Implementation Rule Of Thumb
 
-Follow the tasks in [Implementation Tasks](./runbooks/implementation-tasks.md) sequentially.
+Current focus is the [MT5 XAUUSD MVP](./product/mt5-xauusd-mvp.md). Follow [MT5 XAUUSD MVP Tasks](./runbooks/mt5-xauusd-mvp-tasks.md) before returning to the broader generic roadmap.
 
 Each task should:
 

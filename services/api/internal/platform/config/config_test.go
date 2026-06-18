@@ -10,6 +10,7 @@ func TestLoadUsesDefaults(t *testing.T) {
 	t.Setenv("OMT_ENV", "")
 	t.Setenv("OMT_DATABASE_URL", "")
 	t.Setenv("OMT_SHUTDOWN_TIMEOUT", "")
+	t.Setenv("OMT_API_MOCK_MODE", "")
 
 	cfg := Load()
 
@@ -25,6 +26,9 @@ func TestLoadUsesDefaults(t *testing.T) {
 	if cfg.ShutdownTimeout != 10*time.Second {
 		t.Fatalf("ShutdownTimeout = %s, want %s", cfg.ShutdownTimeout, 10*time.Second)
 	}
+	if cfg.APIMockMode {
+		t.Fatalf("APIMockMode = %t, want false", cfg.APIMockMode)
+	}
 }
 
 func TestLoadUsesEnvironmentOverrides(t *testing.T) {
@@ -32,6 +36,7 @@ func TestLoadUsesEnvironmentOverrides(t *testing.T) {
 	t.Setenv("OMT_ENV", "test")
 	t.Setenv("OMT_DATABASE_URL", "postgres://example")
 	t.Setenv("OMT_SHUTDOWN_TIMEOUT", "3s")
+	t.Setenv("OMT_API_MOCK_MODE", "true")
 
 	cfg := Load()
 
@@ -46,5 +51,18 @@ func TestLoadUsesEnvironmentOverrides(t *testing.T) {
 	}
 	if cfg.ShutdownTimeout != 3*time.Second {
 		t.Fatalf("ShutdownTimeout = %s, want %s", cfg.ShutdownTimeout, 3*time.Second)
+	}
+	if !cfg.APIMockMode {
+		t.Fatalf("APIMockMode = %t, want true", cfg.APIMockMode)
+	}
+}
+
+func TestLoadUsesBoolFallbackOnInvalidValue(t *testing.T) {
+	t.Setenv("OMT_API_MOCK_MODE", "not-a-bool")
+
+	cfg := Load()
+
+	if cfg.APIMockMode {
+		t.Fatalf("APIMockMode = %t, want false on invalid value", cfg.APIMockMode)
 	}
 }

@@ -68,6 +68,18 @@
 
 ## Development Tasks
 
+## Current MVP Pivot
+
+The project priority has changed to **XAUUSD only, MT5 read-only integration, and paper signals first**.
+
+Before continuing generic roadmap tasks such as market structure detection, agent workflow, broad backtesting, or multi-market support, follow:
+
+- [MT5 XAUUSD MVP](../product/mt5-xauusd-mvp.md)
+- [MT5 Integration Architecture](../architecture/mt5-integration.md)
+- [MT5 XAUUSD MVP Tasks](./mt5-xauusd-mvp-tasks.md)
+
+Generic tasks below remain useful but are lower priority until the MT5 MVP is working.
+
 ### Task 1: Repository Scaffold
 
 **Files:**
@@ -205,13 +217,13 @@
 - Create: `apps/web/app/markets/[symbol]/page.tsx`
 - Create: `apps/web/features/markets/`
 
-- [ ] Install TradingView Lightweight Charts.
-- [ ] Add symbol route.
-- [ ] Fetch candles from API.
-- [ ] Render candlestick chart.
-- [ ] Add timeframe selector.
-- [ ] Add loading, empty, and error states.
-- [ ] Add Playwright smoke test.
+- [x] Install TradingView Lightweight Charts.
+- [x] Add symbol route.
+- [x] Fetch candles from API.
+- [x] Render candlestick chart.
+- [x] Add timeframe selector.
+- [x] Add loading, empty, and error states.
+- [x] Add Playwright smoke test.
 - [ ] Commit with message `feat(web): add market chart page`.
 
 ### Task 10: Indicators
@@ -222,13 +234,13 @@
 - Modify: `services/api/internal/application/marketdata/`
 - Modify: `services/api/internal/adapters/http/`
 
-- [ ] Implement EMA.
-- [ ] Implement RSI.
-- [ ] Implement MACD.
-- [ ] Implement ATR.
-- [ ] Add golden fixture tests.
-- [ ] Add `GET /api/indicators`.
-- [ ] Add chart overlays in frontend.
+- [x] Implement EMA.
+- [x] Implement RSI.
+- [x] Implement MACD.
+- [x] Implement ATR.
+- [x] Add golden fixture tests.
+- [x] Add `GET /api/indicators`.
+- [x] Add chart overlays in frontend.
 - [ ] Commit with message `feat(analysis): add core indicators`.
 
 ### Task 11: Market Structure Detection

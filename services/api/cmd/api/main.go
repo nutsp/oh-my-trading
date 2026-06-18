@@ -10,10 +10,12 @@ import (
 	"os/signal"
 	"path/filepath"
 	"syscall"
+	"time"
 
 	"github.com/google/uuid"
 	_ "github.com/jackc/pgx/v5/stdlib"
 	httpadapter "github.com/sutad-p/oh-my-trading/services/api/internal/adapters/http"
+	"github.com/sutad-p/oh-my-trading/services/api/internal/adapters/mockdata"
 	"github.com/sutad-p/oh-my-trading/services/api/internal/adapters/postgres"
 	"github.com/sutad-p/oh-my-trading/services/api/internal/application/marketdata"
 	"github.com/sutad-p/oh-my-trading/services/api/internal/platform/config"
@@ -24,26 +26,37 @@ func main() {
 	cfg := config.Load()
 	log := logger.New(cfg.Environment)
 
-	db, err := sql.Open("pgx", cfg.DatabaseURL)
-	if err != nil {
-		log.Error("open database", slog.String("error", err.Error()))
-		os.Exit(1)
-	}
-	defer db.Close()
+	var handler http.Handler
+	if cfg.APIMockMode {
+		log.Info("api mock mode enabled", slog.String("mode", "mock"))
+		handler = httpadapter.NewRouter(
+			httpadapter.WithSymbolService(mockdata.NewSymbolService(uuid.NewString)),
+			httpadapter.WithCandleService(mockdata.NewCandleService()),
+			httpadapter.WithIndicatorService(mockdata.NewIndicatorService()),
+		)
+	} else {
+		db, err := sql.Open("pgx", cfg.DatabaseURL)
+		if err != nil {
+			log.Error("open database", slog.String("error", err.Error()))
+			os.Exit(1)
+		}
+		defer db.Close()
 
-	if err := postgres.RunMigrations(context.Background(), db, filepath.Join("migrations")); err != nil {
-		log.Error("run database migrations", slog.String("error", err.Error()))
-		os.Exit(1)
+		if err := postgres.RunMigrations(context.Background(), db, filepath.Join("migrations")); err != nil {
+			log.Error("run database migrations", slog.String("error", err.Error()))
+			os.Exit(1)
+		}
+
+		handler = httpadapter.NewRouter(
+			httpadapter.WithSymbolService(marketdata.NewSymbolService(postgres.NewSymbolRepository(db), uuid.NewString)),
+			httpadapter.WithCandleService(marketdata.NewCandleService(postgres.NewCandleRepository(db))),
+			httpadapter.WithIndicatorService(marketdata.NewIndicatorService(postgres.NewCandleRepository(db), time.Now)),
+		)
 	}
 
-	symbols := marketdata.NewSymbolService(postgres.NewSymbolRepository(db), uuid.NewString)
-	candles := marketdata.NewCandleService(postgres.NewCandleRepository(db))
 	server := &http.Server{
-		Addr: cfg.HTTPAddr,
-		Handler: httpadapter.NewRouter(
-			httpadapter.WithSymbolService(symbols),
-			httpadapter.WithCandleService(candles),
-		),
+		Addr:    cfg.HTTPAddr,
+		Handler: handler,
 	}
 
 	errs := make(chan error, 1)

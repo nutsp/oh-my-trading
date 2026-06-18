@@ -186,6 +186,73 @@ select {
   grid-template-columns: minmax(0, 1.5fr) minmax(320px, 0.9fr);
 }
 
+.market-page {
+  display: grid;
+  gap: 16px;
+}
+
+.market-chart-shell {
+  min-height: 420px;
+  padding: 14px;
+}
+
+.market-chart-canvas {
+  height: 100%;
+  min-height: 392px;
+  width: 100%;
+}
+
+.timeframe-switcher {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.timeframe-item {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 12px;
+  padding: 6px 10px;
+}
+
+.timeframe-item.active {
+  background: var(--surface-muted);
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.market-state {
+  align-items: flex-start;
+  display: grid;
+  gap: 8px;
+  justify-content: flex-start;
+  margin: 0;
+  padding: 20px;
+}
+
+.market-state h2,
+.market-state h3 {
+  margin: 0;
+}
+
+.market-state p {
+  color: var(--muted);
+  margin: 0;
+}
+
+.market-state.loading {
+  background: var(--surface);
+}
+
+.market-indicator-grid {
+  margin-bottom: 0;
+}
+
+.market-inline-warning {
+  color: var(--amber);
+  margin: 0;
+}
+
 .panel-header {
   align-items: center;
   border-bottom: 1px solid var(--line);

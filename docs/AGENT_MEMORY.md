@@ -6,6 +6,7 @@ Update this file when an important decision, constraint, milestone, or handoff s
 
 ## Current State
 
+- Current MVP focus has pivoted to **XAUUSD only, MT5 read-only integration, and paper signals first**.
 - Project is in planning and scaffold phase.
 - Repository structure has been created according to the recommended folder structure.
 - Repository structure has been cleaned so project documents live in their intended folders.
@@ -18,17 +19,23 @@ Update this file when an important decision, constraint, milestone, or handoff s
 - Candle storage and query API has been implemented across domain, application service, PostgreSQL repository, and HTTP API.
 - Market data sync worker foundation has been implemented with a provider interface, synthetic provider, RabbitMQ publisher, and worker consumer.
 - Next.js dashboard shell has been implemented with navigation, dashboard overview, API client, visual system, and smoke test.
+- Market chart page has been implemented with dynamic symbol route, timeframe selector, lightweight candlestick rendering, candle API integration, and route-level loading/error states.
+- Indicator module has been implemented with EMA, RSI, MACD, ATR domain calculators, `GET /api/indicators`, and chart overlays on the market page.
+- API mock mode has been implemented behind `OMT_API_MOCK_MODE=true` to serve symbols, candles, and indicators without requiring database connectivity.
 - Task 1 has been committed as `fd4f633` with message `chore: add project scaffold`.
 - Task 2 local infrastructure has been implemented and verified healthy with Docker Compose.
 
 ## Product Memory
 
 - The system is a personal AI Trading Agent Dashboard.
-- Target markets are XAUUSD, BTC, Forex, and Crypto.
+- Current MVP target is XAUUSD only through MT5.
+- Previous broader targets remain future scope: BTC, Forex, and Crypto.
 - Trading style is top-down analysis with EMA, RSI, MACD, ATR, and ICT/SMC concepts.
 - The product should support market analysis, AI signals, risk management, trade journal, backtesting, and agent monitoring.
 - The system should prioritize decision support before automation.
 - Auto-trading is a future feature and should not be implemented before risk, journal, backtesting, monitoring, paper trading, audit logs, and a kill switch exist.
+- MT5 integration should start with Python bridge -> Go REST ingest, not EA WebSocket.
+- The first MT5 MVP is read-only: heartbeat, ticks, candles, account snapshots, positions, bridge status, and paper signals.
 
 ## Technical Memory
 
@@ -78,7 +85,9 @@ Primary documents:
 
 Next recommended task:
 
-- Commit `Task 8: Next.js Dashboard Shell`, then start `Task 9: Market Chart Page` from `docs/runbooks/implementation-tasks.md`.
+- Pause generic market-structure work.
+- Clean/commit or deliberately set aside current uncommitted Task 9/10 draft.
+- Start `Task 1: MT5 Database Schema` from `docs/runbooks/mt5-xauusd-mvp-tasks.md`.
 
 Current scaffold exists:
 
@@ -129,3 +138,19 @@ Before implementing code:
 - Committed Task 7 as `492867e`.
 - Implemented Task 8 Next.js dashboard shell.
 - Verified Task 8 with `npm test`, `npm run typecheck`, `npm run build`, and `npm audit --omit=dev` showing 0 vulnerabilities.
+- Implemented Task 9 market chart page with `apps/web/app/markets/[symbol]` route, timeframe selector, candle API fetch, and lightweight candlestick chart rendering.
+- Added route-level loading and error UI for markets page, plus empty-state fallback when no candles are available.
+- Added Playwright smoke test coverage for the market chart route and registered `test:e2e` script.
+- Verified Task 9 with `npm test`, `npm run typecheck`, `npm run build`, and `npm run test:e2e -- --list` in `apps/web`.
+- Implemented Task 10 indicator engine in `services/api/internal/domain/market/indicators` with EMA, RSI, MACD, and ATR calculations.
+- Added indicator application service and HTTP API route `GET /api/indicators` wired via `cmd/api/main.go`.
+- Added golden fixture tests for indicators and HTTP/application tests for indicator service and endpoint behavior.
+- Extended market chart frontend to fetch indicator series, render EMA overlays, and show latest EMA/RSI/ATR metric cards.
+- Verified Task 10 with `go test ./...` in `services/api`, plus `npm test`, `npm run typecheck`, `npm run build`, and `npm run test:e2e` in `apps/web`.
+- Added mock-data adapter services and startup branch in API command so local UI work can continue before real data pipelines are ready.
+- Added `OMT_API_MOCK_MODE` configuration flag and documented mock-mode startup in `README.md`.
+- Pivoted MVP focus to XAUUSD-only MT5 read-only integration plus paper signals first.
+- Added MT5-focused docs:
+  - `docs/product/mt5-xauusd-mvp.md`
+  - `docs/architecture/mt5-integration.md`
+  - `docs/runbooks/mt5-xauusd-mvp-tasks.md`

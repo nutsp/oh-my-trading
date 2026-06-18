@@ -24,5 +24,19 @@ test("api client points to backend api by default", async () => {
 
   assert.match(client, /NEXT_PUBLIC_API_BASE_URL/);
   assert.match(client, /http:\/\/localhost:8080/);
+  assert.match(client, /\/api\/indicators/);
+});
+
+test("markets route is wired with timeframe selector", async () => {
+  const marketPage = await readFile(
+    new URL("../features/markets/market-chart-page.tsx", import.meta.url),
+    "utf8",
+  );
+  const route = await readFile(new URL("../app/markets/[symbol]/page.tsx", import.meta.url), "utf8");
+
+  for (const timeframe of ["15m", "1h", "4h", "1d"]) {
+    assert.match(marketPage, new RegExp(timeframe));
+  }
+  assert.match(route, /MarketChartPage/);
 });
 
