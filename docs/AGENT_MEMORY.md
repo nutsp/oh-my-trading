@@ -91,8 +91,10 @@ Primary documents:
 Next recommended task:
 
 - Test the Python bridge against a real MT5 terminal using XAUUSD demo data.
-- Seed or create the `XAUUSD` symbol before sending MT5 candle batches.
-- Improve empty/latest-data behavior for `GET /api/mt5/status` if the dashboard should show `204`/empty state instead of a backend `500` before the first heartbeat.
+- `XAUUSD` is now seeded by migration before MT5 candle batches are sent.
+- `GET /api/mt5/status` now returns `200` with `state: "waiting_for_bridge"` before the first heartbeat/tick instead of returning `500`.
+- The Python bridge can post local sample payloads with `PYTHONPATH=src python3 -m mt5_bridge --post-sample`.
+- Next real integration step is connecting the Python bridge to an actual MT5 demo terminal.
 - Continue with broker-safe paper signal review UX before any auto-trading work.
 
 Current scaffold exists:
@@ -168,3 +170,5 @@ Before implementing code:
 - Implemented MT5 MVP Task 5 dashboard page at `/mt5`; committed as `c46696e`.
 - Implemented MT5 MVP Task 6 XAUUSD paper signals; committed as `5c4d66d`.
 - Verified final state with `go test ./...`, `PYTHONPATH=src python3 -m unittest discover -s tests`, and `npm test && npm run typecheck && npm run build`.
+- Added local MT5 smoke-readiness improvements: waiting status response, XAUUSD seed migration, and Python bridge `--post-sample`.
+- Verified local end-to-end sample ingest: health OK, status moved from `waiting_for_bridge` to `connected`, and account/positions/candles were readable from the API.

@@ -111,6 +111,7 @@ export type MT5TickDto = {
 };
 
 export type MT5StatusDto = {
+  state: "connected" | "waiting_for_bridge";
   heartbeat: MT5HeartbeatDto;
   latestTick: MT5TickDto;
 };

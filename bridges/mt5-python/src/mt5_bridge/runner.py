@@ -56,8 +56,20 @@ def run_once(adapter: MT5Adapter, config: BridgeConfig, client: GoAPIClient) -> 
 
 
 def print_dry_run(config: BridgeConfig, out: TextIO) -> None:
+    for path, payload in sample_payloads(config).items():
+        out.write(f"POST {path}\n")
+        out.write(json.dumps(payload, indent=2, sort_keys=True))
+        out.write("\n")
+
+
+def post_sample(config: BridgeConfig, client: GoAPIClient) -> None:
+    for path, payload in sample_payloads(config).items():
+        client.post_json(path, payload)
+
+
+def sample_payloads(config: BridgeConfig) -> dict[str, dict[str, Any]]:
     now = datetime(2026, 6, 18, 10, 0, 0, tzinfo=UTC)
-    payloads: dict[str, dict[str, Any]] = {
+    return {
         "/api/mt5/heartbeat": build_heartbeat(
             bridge_id=config.bridge_id,
             terminal="MetaTrader 5",
@@ -123,7 +135,3 @@ def print_dry_run(config: BridgeConfig, out: TextIO) -> None:
             time=now,
         ),
     }
-    for path, payload in payloads.items():
-        out.write(f"POST {path}\n")
-        out.write(json.dumps(payload, indent=2, sort_keys=True))
-        out.write("\n")

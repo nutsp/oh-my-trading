@@ -3,6 +3,7 @@ package httpadapter
 import (
 	"bytes"
 	"context"
+	"database/sql"
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
@@ -75,6 +76,29 @@ func TestMT5RoutesIngestAndReadStatus(t *testing.T) {
 	}
 	if response.LatestTick.Ask != 2325.62 {
 		t.Fatalf("latest tick ask = %f, want 2325.62", response.LatestTick.Ask)
+	}
+}
+
+func TestMT5StatusReturnsWaitingStateBeforeFirstBridgeData(t *testing.T) {
+	service := &fakeMT5Service{err: sql.ErrNoRows}
+	router := NewRouter(WithMT5Service(service))
+
+	req := httptest.NewRequest(http.MethodGet, "/api/mt5/status", nil)
+	rec := httptest.NewRecorder()
+	router.ServeHTTP(rec, req)
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("status route code = %d, want %d", rec.Code, http.StatusOK)
+	}
+	var response mt5StatusResponse
+	if err := json.NewDecoder(rec.Body).Decode(&response); err != nil {
+		t.Fatalf("decode status response: %v", err)
+	}
+	if response.State != "waiting_for_bridge" {
+		t.Fatalf("state = %q, want waiting_for_bridge", response.State)
+	}
+	if response.Heartbeat.Status != "disconnected" {
+		t.Fatalf("heartbeat status = %q, want disconnected", response.Heartbeat.Status)
 	}
 }
 

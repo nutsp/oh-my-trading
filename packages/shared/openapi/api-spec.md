@@ -270,6 +270,7 @@ Response:
 
 ```json
 {
+  "state": "connected",
   "heartbeat": {
     "bridgeId": "local-mt5",
     "terminal": "MetaTrader 5",
@@ -285,6 +286,27 @@ Response:
     "last": 2325.52,
     "volume": 12,
     "time": "2026-06-18T11:00:00Z"
+  }
+}
+```
+
+Before the first bridge payload arrives, the endpoint still returns `200 OK`:
+
+```json
+{
+  "state": "waiting_for_bridge",
+  "heartbeat": {
+    "bridgeId": "local-mt5",
+    "status": "disconnected",
+    "sentAt": ""
+  },
+  "latestTick": {
+    "symbol": "XAUUSD",
+    "bid": 0,
+    "ask": 0,
+    "last": 0,
+    "volume": 0,
+    "time": ""
   }
 }
 ```

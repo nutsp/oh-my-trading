@@ -6,12 +6,13 @@ import sys
 from .client import GoAPIClient
 from .config import BridgeConfig
 from .mt5_adapter import MetaTrader5Adapter
-from .runner import print_dry_run, run_once
+from .runner import post_sample, print_dry_run, run_once
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Read-only MT5 bridge for the XAUUSD MVP.")
     parser.add_argument("--dry-run", action="store_true", help="print example payloads without connecting to MT5")
+    parser.add_argument("--post-sample", action="store_true", help="post sample payloads without connecting to MT5")
     parser.add_argument("--once", action="store_true", help="poll MT5 once and post to the Go API")
     args = parser.parse_args()
 
@@ -23,8 +24,12 @@ def main() -> int:
         print_dry_run(config, sys.stdout)
         return 0
 
+    if args.post_sample:
+        post_sample(config, GoAPIClient(config.api_url))
+        return 0
+
     if not args.once:
-        parser.error("choose --dry-run or --once")
+        parser.error("choose --dry-run, --post-sample, or --once")
 
     adapter = MetaTrader5Adapter()
     try:

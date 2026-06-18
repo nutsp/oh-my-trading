@@ -34,17 +34,13 @@ func TestCandleRepositoryUpsertsAndListsCandles(t *testing.T) {
 		t.Fatalf("run migrations: %v", err)
 	}
 
-	symbolRepo := NewSymbolRepository(db)
-	symbol, err := symbolRepo.CreateSymbol(ctx, market.Symbol{
-		ID:         "018f4f8a-0000-7000-9000-000000000201",
-		Code:       "XAUUSD",
-		Market:     "forex",
-		BaseAsset:  "XAU",
-		QuoteAsset: "USD",
-		Enabled:    true,
-	})
-	if err != nil {
-		t.Fatalf("CreateSymbol returned error: %v", err)
+	symbolID := "018f4f8a-0000-7000-9000-000000000001"
+	var seededCode string
+	if err := db.QueryRowContext(ctx, "SELECT code FROM symbols WHERE id = $1", symbolID).Scan(&seededCode); err != nil {
+		t.Fatalf("load seeded XAUUSD symbol: %v", err)
+	}
+	if seededCode != "XAUUSD" {
+		t.Fatalf("seededCode = %q, want XAUUSD", seededCode)
 	}
 
 	repo := NewCandleRepository(db)
@@ -53,7 +49,7 @@ func TestCandleRepositoryUpsertsAndListsCandles(t *testing.T) {
 
 	err = repo.UpsertCandles(ctx, []market.Candle{
 		{
-			SymbolID:  symbol.ID,
+			SymbolID:  symbolID,
 			Timeframe: "1h",
 			Timestamp: first,
 			Open:      2320.1,
@@ -63,7 +59,7 @@ func TestCandleRepositoryUpsertsAndListsCandles(t *testing.T) {
 			Volume:    12345,
 		},
 		{
-			SymbolID:  symbol.ID,
+			SymbolID:  symbolID,
 			Timeframe: "1h",
 			Timestamp: second,
 			Open:      2325.5,
@@ -78,7 +74,7 @@ func TestCandleRepositoryUpsertsAndListsCandles(t *testing.T) {
 	}
 
 	err = repo.UpsertCandles(ctx, []market.Candle{{
-		SymbolID:  symbol.ID,
+		SymbolID:  symbolID,
 		Timeframe: "1h",
 		Timestamp: first,
 		Open:      2320.1,

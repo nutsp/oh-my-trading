@@ -36,27 +36,27 @@ func TestSymbolRepositoryCreatesAndListsSymbols(t *testing.T) {
 	repo := NewSymbolRepository(db)
 	created, err := repo.CreateSymbol(ctx, market.Symbol{
 		ID:         "018f4f8a-0000-7000-9000-000000000101",
-		Code:       "XAUUSD",
+		Code:       "BTCUSD",
 		Market:     "forex",
-		BaseAsset:  "XAU",
+		BaseAsset:  "BTC",
 		QuoteAsset: "USD",
 		Enabled:    true,
 	})
 	if err != nil {
 		t.Fatalf("CreateSymbol returned error: %v", err)
 	}
-	if created.Code != "XAUUSD" {
-		t.Fatalf("created.Code = %q, want XAUUSD", created.Code)
+	if created.Code != "BTCUSD" {
+		t.Fatalf("created.Code = %q, want BTCUSD", created.Code)
 	}
 
 	symbols, err := repo.ListSymbols(ctx)
 	if err != nil {
 		t.Fatalf("ListSymbols returned error: %v", err)
 	}
-	if len(symbols) != 1 {
-		t.Fatalf("len(symbols) = %d, want 1", len(symbols))
+	if len(symbols) != 2 {
+		t.Fatalf("len(symbols) = %d, want 2", len(symbols))
 	}
-	if symbols[0].ID != "018f4f8a-0000-7000-9000-000000000101" {
-		t.Fatalf("symbols[0].ID = %q", symbols[0].ID)
+	if symbols[0].Code != "BTCUSD" || symbols[1].Code != "XAUUSD" {
+		t.Fatalf("symbol order = %q, %q; want BTCUSD, XAUUSD", symbols[0].Code, symbols[1].Code)
 	}
 }

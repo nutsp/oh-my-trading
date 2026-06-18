@@ -17,6 +17,15 @@ cd bridges/mt5-python
 PYTHONPATH=src python3 -m mt5_bridge --dry-run
 ```
 
+## Post Sample Payloads
+
+Use this after the Go API is running locally. It posts sample heartbeat, tick, candle, account, and position payloads without connecting to MT5.
+
+```bash
+cd bridges/mt5-python
+PYTHONPATH=src python3 -m mt5_bridge --post-sample
+```
+
 ## Tests
 
 ```bash

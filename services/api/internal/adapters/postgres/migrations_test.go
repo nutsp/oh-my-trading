@@ -46,6 +46,7 @@ func TestRunMigrationsCreatesInitialSchema(t *testing.T) {
 	assertTableExists(t, ctx, db, "paper_signals")
 	assertTimescaleExtensionExists(t, ctx, db)
 	assertCandlesIsHypertable(t, ctx, db)
+	assertSeedSymbolExists(t, ctx, db, "XAUUSD")
 }
 
 func resetMigrationState(t *testing.T, ctx context.Context, db *sql.DB) {
@@ -111,5 +112,28 @@ func assertCandlesIsHypertable(t *testing.T, ctx context.Context, db *sql.DB) {
 	}
 	if !exists {
 		t.Fatal("expected candles to be a TimescaleDB hypertable")
+	}
+}
+
+func assertSeedSymbolExists(t *testing.T, ctx context.Context, db *sql.DB, code string) {
+	t.Helper()
+
+	var exists bool
+	err := db.QueryRowContext(ctx, `
+		SELECT EXISTS (
+			SELECT 1
+			FROM symbols
+			WHERE code = $1
+			  AND market = 'forex'
+			  AND base_asset = 'XAU'
+			  AND quote_asset = 'USD'
+			  AND enabled = true
+		)
+	`, code).Scan(&exists)
+	if err != nil {
+		t.Fatalf("check seed symbol %s: %v", code, err)
+	}
+	if !exists {
+		t.Fatalf("expected seed symbol %s to exist", code)
 	}
 }

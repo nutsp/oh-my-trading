@@ -29,7 +29,7 @@ export async function MT5Dashboard() {
       <section className="metrics-grid" aria-label="MT5 bridge metrics">
         <div className="metric">
           <span>Bridge</span>
-          <strong>{statusResult.data?.heartbeat.status ?? "Offline"}</strong>
+          <strong>{formatBridgeState(statusResult.data)}</strong>
         </div>
         <div className="metric">
           <span>Spread</span>
@@ -225,7 +225,20 @@ function formatSpread(status?: MT5StatusDto): string {
   if (!status) {
     return "-";
   }
+  if (status.state !== "connected") {
+    return "-";
+  }
   return (status.latestTick.ask - status.latestTick.bid).toFixed(2);
+}
+
+function formatBridgeState(status?: MT5StatusDto): string {
+  if (!status) {
+    return "Offline";
+  }
+  if (status.state === "waiting_for_bridge") {
+    return "Waiting";
+  }
+  return status.heartbeat.status;
 }
 
 function formatMoney(value?: number, currency = "USD"): string {

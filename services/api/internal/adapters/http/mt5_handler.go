@@ -2,6 +2,7 @@ package httpadapter
 
 import (
 	"context"
+	"database/sql"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -116,6 +117,7 @@ type mt5TickResponse struct {
 }
 
 type mt5StatusResponse struct {
+	State      string               `json:"state"`
 	Heartbeat  mt5HeartbeatResponse `json:"heartbeat"`
 	LatestTick mt5TickResponse      `json:"latestTick"`
 }
@@ -260,19 +262,45 @@ func mt5StatusHandler(service mt5Service) http.HandlerFunc {
 
 		heartbeat, err := service.LatestHeartbeat(r.Context(), defaultMT5BridgeID)
 		if err != nil {
+			if isMT5WaitingForBridge(err) {
+				writeJSON(w, http.StatusOK, mt5WaitingStatusResponse())
+				return
+			}
 			http.Error(w, "latest mt5 heartbeat", http.StatusInternalServerError)
 			return
 		}
 		tick, err := service.LatestTick(r.Context(), defaultMT5Symbol)
 		if err != nil {
+			if isMT5WaitingForBridge(err) {
+				writeJSON(w, http.StatusOK, mt5WaitingStatusResponse())
+				return
+			}
 			http.Error(w, "latest mt5 tick", http.StatusInternalServerError)
 			return
 		}
 
 		writeJSON(w, http.StatusOK, mt5StatusResponse{
+			State:      "connected",
 			Heartbeat:  mapMT5Heartbeat(heartbeat),
 			LatestTick: mapMT5Tick(tick),
 		})
+	}
+}
+
+func isMT5WaitingForBridge(err error) bool {
+	return errors.Is(err, sql.ErrNoRows)
+}
+
+func mt5WaitingStatusResponse() mt5StatusResponse {
+	return mt5StatusResponse{
+		State: "waiting_for_bridge",
+		Heartbeat: mt5HeartbeatResponse{
+			BridgeID: defaultMT5BridgeID,
+			Status:   "disconnected",
+		},
+		LatestTick: mt5TickResponse{
+			Symbol: defaultMT5Symbol,
+		},
 	}
 }
 
