@@ -74,7 +74,7 @@ Integrate MT5 for XAUUSD only through a Python bridge and Go ingest APIs, then s
 - [x] Add payload builders with unit tests.
 - [x] Add dry-run mode that prints payloads without connecting to MT5.
 - [x] Add `MetaTrader5` adapter boundary but keep it replaceable in tests.
-- [ ] Commit with message `feat(mt5): add python bridge skeleton`.
+- [x] Commit with message `feat(mt5): add python bridge skeleton`.
 
 ## Task 5: Bridge Status Dashboard
 
@@ -85,14 +85,14 @@ Integrate MT5 for XAUUSD only through a Python bridge and Go ingest APIs, then s
 - Modify: `apps/web/components/app-shell.tsx`
 - Modify: `apps/web/lib/api-client.ts`
 
-- [ ] Add API client methods for MT5 status, account, and positions.
-- [ ] Add MT5 navigation item.
-- [ ] Add bridge health panel.
-- [ ] Add latest tick/spread panel.
-- [ ] Add account snapshot panel.
-- [ ] Add open positions table.
-- [ ] Add smoke test for MT5 page route.
-- [ ] Run `npm test`, `npm run typecheck`, and `npm run build`.
+- [x] Add API client methods for MT5 status, account, and positions.
+- [x] Add MT5 navigation item.
+- [x] Add bridge health panel.
+- [x] Add latest tick/spread panel.
+- [x] Add account snapshot panel.
+- [x] Add open positions table.
+- [x] Add smoke test for MT5 page route.
+- [x] Run `npm test`, `npm run typecheck`, and `npm run build`.
 - [ ] Commit with message `feat(web): add mt5 bridge dashboard`.
 
 ## Task 6: Paper Signal Foundation

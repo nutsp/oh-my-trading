@@ -3,6 +3,7 @@ import Link from "next/link";
 const navigation = [
   ["Dashboard", "/"],
   ["Markets", "/markets/XAUUSD"],
+  ["MT5", "/mt5"],
   ["Signals", "/signals"],
   ["Risk", "/risk"],
   ["Journal", "/journal"],
@@ -38,4 +39,3 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     </div>
   );
 }
-
