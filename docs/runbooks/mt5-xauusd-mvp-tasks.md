@@ -37,7 +37,7 @@ Integrate MT5 for XAUUSD only through a Python bridge and Go ingest APIs, then s
 - [x] Add candle ingest path that upserts MT5 candles into existing `candles`.
 - [x] Reject non-XAUUSD payloads during MVP.
 - [x] Run `go test ./internal/application/mt5`.
-- [ ] Commit with message `feat(mt5): add xauusd ingest service`.
+- [x] Commit with message `feat(mt5): add xauusd ingest service`.
 
 ## Task 3: MT5 HTTP Ingest API
 
@@ -48,15 +48,15 @@ Integrate MT5 for XAUUSD only through a Python bridge and Go ingest APIs, then s
 - Modify: `services/api/internal/adapters/http/router.go`
 - Modify: `services/api/cmd/api/main.go`
 
-- [ ] Write failing HTTP contract tests for MT5 ingest endpoints.
-- [ ] Add `POST /api/mt5/heartbeat`.
-- [ ] Add `POST /api/mt5/ticks`.
-- [ ] Add `POST /api/mt5/candles`.
-- [ ] Add `POST /api/mt5/account-snapshot`.
-- [ ] Add `POST /api/mt5/positions`.
-- [ ] Add `GET /api/mt5/status`.
-- [ ] Add latest account and positions read endpoints.
-- [ ] Run `go test ./internal/adapters/http ./...`.
+- [x] Write failing HTTP contract tests for MT5 ingest endpoints.
+- [x] Add `POST /api/mt5/heartbeat`.
+- [x] Add `POST /api/mt5/ticks`.
+- [x] Add `POST /api/mt5/candles`.
+- [x] Add `POST /api/mt5/account-snapshot`.
+- [x] Add `POST /api/mt5/positions`.
+- [x] Add `GET /api/mt5/status`.
+- [x] Add latest account and positions read endpoints.
+- [x] Run `go test ./internal/adapters/http ./...`.
 - [ ] Commit with message `feat(mt5): add ingest api`.
 
 ## Task 4: Python MT5 Bridge Skeleton

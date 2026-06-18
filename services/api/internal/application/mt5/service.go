@@ -99,6 +99,25 @@ func (s *Service) IngestPositionSnapshots(ctx context.Context, positions []domai
 	return nil
 }
 
+func (s *Service) LatestHeartbeat(ctx context.Context, bridgeID string) (domainmt5.Heartbeat, error) {
+	return s.mt5Repo.LatestHeartbeat(ctx, bridgeID)
+}
+
+func (s *Service) LatestTick(ctx context.Context, symbol string) (domainmt5.Tick, error) {
+	if err := validateXAUUSD(symbol); err != nil {
+		return domainmt5.Tick{}, err
+	}
+	return s.mt5Repo.LatestTick(ctx, symbol)
+}
+
+func (s *Service) LatestAccountSnapshot(ctx context.Context, accountLogin string) (domainmt5.AccountSnapshot, error) {
+	return s.mt5Repo.LatestAccountSnapshot(ctx, accountLogin)
+}
+
+func (s *Service) LatestPositionSnapshots(ctx context.Context, accountLogin string) ([]domainmt5.PositionSnapshot, error) {
+	return s.mt5Repo.LatestPositionSnapshots(ctx, accountLogin)
+}
+
 func (s *Service) findEnabledXAUUSD(ctx context.Context) (market.Symbol, error) {
 	symbols, err := s.symbolRepo.ListSymbols(ctx)
 	if err != nil {

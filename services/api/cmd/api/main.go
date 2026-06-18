@@ -18,6 +18,7 @@ import (
 	"github.com/sutad-p/oh-my-trading/services/api/internal/adapters/mockdata"
 	"github.com/sutad-p/oh-my-trading/services/api/internal/adapters/postgres"
 	"github.com/sutad-p/oh-my-trading/services/api/internal/application/marketdata"
+	appmt5 "github.com/sutad-p/oh-my-trading/services/api/internal/application/mt5"
 	"github.com/sutad-p/oh-my-trading/services/api/internal/platform/config"
 	"github.com/sutad-p/oh-my-trading/services/api/internal/platform/logger"
 )
@@ -47,10 +48,15 @@ func main() {
 			os.Exit(1)
 		}
 
+		symbolRepo := postgres.NewSymbolRepository(db)
+		candleRepo := postgres.NewCandleRepository(db)
+		mt5Repo := postgres.NewMT5Repository(db)
+
 		handler = httpadapter.NewRouter(
-			httpadapter.WithSymbolService(marketdata.NewSymbolService(postgres.NewSymbolRepository(db), uuid.NewString)),
-			httpadapter.WithCandleService(marketdata.NewCandleService(postgres.NewCandleRepository(db))),
-			httpadapter.WithIndicatorService(marketdata.NewIndicatorService(postgres.NewCandleRepository(db), time.Now)),
+			httpadapter.WithSymbolService(marketdata.NewSymbolService(symbolRepo, uuid.NewString)),
+			httpadapter.WithCandleService(marketdata.NewCandleService(candleRepo)),
+			httpadapter.WithIndicatorService(marketdata.NewIndicatorService(candleRepo, time.Now)),
+			httpadapter.WithMT5Service(appmt5.NewService(mt5Repo, symbolRepo, candleRepo)),
 		)
 	}
 
