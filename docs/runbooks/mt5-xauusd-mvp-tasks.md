@@ -14,13 +14,13 @@ Integrate MT5 for XAUUSD only through a Python bridge and Go ingest APIs, then s
 - Create: `services/api/internal/adapters/postgres/mt5_repository.go`
 - Create: `services/api/internal/adapters/postgres/mt5_repository_test.go`
 
-- [ ] Write failing repository integration test for heartbeat, tick, account snapshot, and position snapshot persistence.
-- [ ] Add migration for `mt5_bridge_heartbeats`.
-- [ ] Add migration for `mt5_ticks`.
-- [ ] Add migration for `mt5_account_snapshots`.
-- [ ] Add migration for `mt5_position_snapshots`.
-- [ ] Implement PostgreSQL repository.
-- [ ] Run `go test ./internal/adapters/postgres`.
+- [x] Write failing repository integration test for heartbeat, tick, account snapshot, and position snapshot persistence.
+- [x] Add migration for `mt5_bridge_heartbeats`.
+- [x] Add migration for `mt5_ticks`.
+- [x] Add migration for `mt5_account_snapshots`.
+- [x] Add migration for `mt5_position_snapshots`.
+- [x] Implement PostgreSQL repository.
+- [x] Run `go test ./internal/adapters/postgres`.
 - [ ] Commit with message `feat(mt5): add read-only mt5 schema`.
 
 ## Task 2: MT5 Domain And Application Service
@@ -112,4 +112,3 @@ Integrate MT5 for XAUUSD only through a Python bridge and Go ingest APIs, then s
 - [ ] Ensure no execution command is created.
 - [ ] Run `go test ./...`.
 - [ ] Commit with message `feat(signals): add xauusd paper signals`.
-
