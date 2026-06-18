@@ -90,12 +90,14 @@
 - Create: `deployments/docker-compose.yml`
 - Create: `deployments/.env.example`
 
-- [ ] Add PostgreSQL/TimescaleDB service.
-- [ ] Add Redis service.
-- [ ] Add RabbitMQ service.
-- [ ] Add health checks for all services.
-- [ ] Run `docker compose -f deployments/docker-compose.yml up -d`.
-- [ ] Commit with message `chore: add local infrastructure`.
+- [x] Add PostgreSQL/TimescaleDB service.
+- [x] Add Redis service.
+- [x] Add RabbitMQ service.
+- [x] Add health checks for all services.
+- [x] Run `docker compose -f deployments/docker-compose.yml up -d`.
+  - Verification note: `docker compose config` passed; stack is healthy.
+  - Retry note: default PostgreSQL host port changed to `15432` because local port `5432` was already allocated.
+- [x] Commit with message `chore: add local infrastructure`.
 
 ### Task 3: Go API Foundation
 

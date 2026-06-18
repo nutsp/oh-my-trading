@@ -1,0 +1,24 @@
+# Local environment
+.env
+.env.*
+!.env.example
+!deployments/.env.example
+
+# Runtime data
+tmp/
+logs/
+
+# Node
+node_modules/
+.next/
+out/
+dist/
+
+# Go
+bin/
+coverage.out
+
+# Local worktrees
+.worktrees/
+worktrees/
+

@@ -13,6 +13,8 @@ Update this file when an important decision, constraint, milestone, or handoff s
 - Root `AGENTS.md` defines project-specific AI agent behavior.
 - Root `README.md` has been created as the project entrypoint.
 - No application code has been implemented yet.
+- Task 1 has been committed as `fd4f633` with message `chore: add project scaffold`.
+- Task 2 local infrastructure has been implemented and verified healthy with Docker Compose.
 
 ## Product Memory
 
@@ -71,7 +73,7 @@ Primary documents:
 
 Next recommended task:
 
-- Commit `Task 1: Repository Scaffold`, then start `Task 2: Local Infrastructure` from `docs/runbooks/implementation-tasks.md`.
+- Start `Task 3: Go API Foundation` from `docs/runbooks/implementation-tasks.md`.
 
 Current scaffold exists:
 
@@ -102,3 +104,7 @@ Before implementing code:
 - Created this memory file for durable agent context.
 - Cleaned project structure by removing unnecessary `.gitkeep` files from folders that now contain real documentation.
 - Completed Task 1 scaffold files and root README content.
+- Committed Task 1 as `fd4f633`.
+- Added Task 2 Docker Compose and `.env.example`.
+- Changed local PostgreSQL host port to `15432` because port `5432` was already allocated.
+- Verified Task 2 with `docker compose -f deployments/docker-compose.yml up -d`; TimescaleDB, Redis, and RabbitMQ were healthy.
