@@ -21,7 +21,7 @@ Integrate MT5 for XAUUSD only through a Python bridge and Go ingest APIs, then s
 - [x] Add migration for `mt5_position_snapshots`.
 - [x] Implement PostgreSQL repository.
 - [x] Run `go test ./internal/adapters/postgres`.
-- [ ] Commit with message `feat(mt5): add read-only mt5 schema`.
+- [x] Commit with message `feat(mt5): add read-only mt5 schema`.
 
 ## Task 2: MT5 Domain And Application Service
 
@@ -31,12 +31,12 @@ Integrate MT5 for XAUUSD only through a Python bridge and Go ingest APIs, then s
 - Create: `services/api/internal/application/mt5/`
 - Test: `services/api/internal/application/mt5/*_test.go`
 
-- [ ] Write failing tests for ingesting heartbeat, ticks, candles, account snapshots, and positions.
-- [ ] Add domain models for `Heartbeat`, `Tick`, `AccountSnapshot`, and `PositionSnapshot`.
-- [ ] Add application service that validates `XAUUSD` only.
-- [ ] Add candle ingest path that upserts MT5 candles into existing `candles`.
-- [ ] Reject non-XAUUSD payloads during MVP.
-- [ ] Run `go test ./internal/application/mt5`.
+- [x] Write failing tests for ingesting heartbeat, ticks, candles, account snapshots, and positions.
+- [x] Add domain models for `Heartbeat`, `Tick`, `AccountSnapshot`, and `PositionSnapshot`.
+- [x] Add application service that validates `XAUUSD` only.
+- [x] Add candle ingest path that upserts MT5 candles into existing `candles`.
+- [x] Reject non-XAUUSD payloads during MVP.
+- [x] Run `go test ./internal/application/mt5`.
 - [ ] Commit with message `feat(mt5): add xauusd ingest service`.
 
 ## Task 3: MT5 HTTP Ingest API

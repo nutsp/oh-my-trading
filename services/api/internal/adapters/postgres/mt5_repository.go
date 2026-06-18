@@ -4,7 +4,8 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"time"
+
+	domainmt5 "github.com/sutad-p/oh-my-trading/services/api/internal/domain/mt5"
 )
 
 type MT5Repository struct {
@@ -15,49 +16,10 @@ func NewMT5Repository(db *sql.DB) *MT5Repository {
 	return &MT5Repository{db: db}
 }
 
-type MT5Heartbeat struct {
-	BridgeID     string
-	Terminal     string
-	AccountLogin string
-	Server       string
-	Status       string
-	LastError    string
-	SentAt       time.Time
-}
-
-type MT5Tick struct {
-	Symbol string
-	Bid    float64
-	Ask    float64
-	Last   float64
-	Volume float64
-	Time   time.Time
-}
-
-type MT5AccountSnapshot struct {
-	AccountLogin string
-	Currency     string
-	Balance      float64
-	Equity       float64
-	Margin       float64
-	FreeMargin   float64
-	MarginLevel  float64
-	Time         time.Time
-}
-
-type MT5PositionSnapshot struct {
-	AccountLogin string
-	Ticket       string
-	Symbol       string
-	Side         string
-	Volume       float64
-	OpenPrice    float64
-	StopLoss     float64
-	TakeProfit   float64
-	Profit       float64
-	OpenedAt     time.Time
-	SnapshotTime time.Time
-}
+type MT5Heartbeat = domainmt5.Heartbeat
+type MT5Tick = domainmt5.Tick
+type MT5AccountSnapshot = domainmt5.AccountSnapshot
+type MT5PositionSnapshot = domainmt5.PositionSnapshot
 
 func (r *MT5Repository) SaveHeartbeat(ctx context.Context, heartbeat MT5Heartbeat) error {
 	_, err := r.db.ExecContext(ctx, `
