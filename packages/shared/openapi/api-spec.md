@@ -172,12 +172,16 @@ Request:
 
 ```json
 {
-  "symbol": "XAUUSD",
-  "bid": 2325.42,
-  "ask": 2325.62,
-  "last": 2325.52,
-  "volume": 12,
-  "time": "2026-06-18T11:00:00Z"
+  "ticks": [
+    {
+      "symbol": "XAUUSD",
+      "bid": 2325.42,
+      "ask": 2325.62,
+      "last": 2325.52,
+      "volume": 12,
+      "time": "2026-06-18T11:00:00Z"
+    }
+  ]
 }
 ```
 
@@ -266,23 +270,35 @@ Response:
 
 ```json
 {
-  "bridgeId": "local-mt5",
-  "status": "healthy",
-  "lastHeartbeatAt": "2026-06-18T11:00:00Z",
-  "stale": false
+  "heartbeat": {
+    "bridgeId": "local-mt5",
+    "terminal": "MetaTrader 5",
+    "accountLogin": "12345678",
+    "server": "Broker-Demo",
+    "status": "healthy",
+    "sentAt": "2026-06-18T11:00:00Z"
+  },
+  "latestTick": {
+    "symbol": "XAUUSD",
+    "bid": 2325.42,
+    "ask": 2325.62,
+    "last": 2325.52,
+    "volume": 12,
+    "time": "2026-06-18T11:00:00Z"
+  }
 }
 ```
 
 ### Latest MT5 Account
 
 ```http
-GET /api/mt5/account/latest
+GET /api/mt5/account/latest?accountLogin=12345678
 ```
 
 ### Latest MT5 Positions
 
 ```http
-GET /api/mt5/positions/latest
+GET /api/mt5/positions/latest?accountLogin=12345678
 ```
 
 ## Analysis And Signals
@@ -318,6 +334,51 @@ Response:
 ```http
 GET /api/analysis/runs
 ```
+
+### Create Paper Signal
+
+```http
+POST /api/paper-signals
+```
+
+Request:
+
+```json
+{
+  "symbol": "XAUUSD",
+  "timeframe": "1h",
+  "side": "long",
+  "confidence": 0.72,
+  "entryPrice": 2325.5,
+  "stopLoss": 2310,
+  "takeProfit": 2340,
+  "thesis": "Top-down bullish continuation with EMA alignment."
+}
+```
+
+Response status: `201 Created`.
+
+### List Paper Signals
+
+```http
+GET /api/paper-signals
+```
+
+### Update Paper Signal Status
+
+```http
+PATCH /api/paper-signals/{id}/status
+```
+
+Request:
+
+```json
+{
+  "status": "approved_paper"
+}
+```
+
+Supported status values after creation: `approved_paper`, `rejected`, `expired`.
 
 ### List Signals
 

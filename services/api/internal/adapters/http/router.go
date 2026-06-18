@@ -27,6 +27,7 @@ type routerConfig struct {
 	candles    candleService
 	indicators indicatorService
 	mt5        mt5Service
+	signals    signalService
 }
 
 type Option func(*routerConfig)
@@ -55,6 +56,12 @@ func WithMT5Service(service mt5Service) Option {
 	}
 }
 
+func WithSignalService(service signalService) Option {
+	return func(cfg *routerConfig) {
+		cfg.signals = service
+	}
+}
+
 func NewRouter(options ...Option) http.Handler {
 	var cfg routerConfig
 	for _, option := range options {
@@ -74,6 +81,8 @@ func NewRouter(options ...Option) http.Handler {
 	mux.HandleFunc("/api/mt5/status", mt5StatusHandler(cfg.mt5))
 	mux.HandleFunc("/api/mt5/account/latest", mt5LatestAccountHandler(cfg.mt5))
 	mux.HandleFunc("/api/mt5/positions/latest", mt5LatestPositionsHandler(cfg.mt5))
+	mux.HandleFunc("/api/paper-signals", paperSignalsHandler(cfg.signals))
+	mux.HandleFunc("/api/paper-signals/", paperSignalStatusHandler(cfg.signals))
 	return mux
 }
 

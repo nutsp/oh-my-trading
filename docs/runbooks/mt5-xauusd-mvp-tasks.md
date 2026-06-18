@@ -93,7 +93,7 @@ Integrate MT5 for XAUUSD only through a Python bridge and Go ingest APIs, then s
 - [x] Add open positions table.
 - [x] Add smoke test for MT5 page route.
 - [x] Run `npm test`, `npm run typecheck`, and `npm run build`.
-- [ ] Commit with message `feat(web): add mt5 bridge dashboard`.
+- [x] Commit with message `feat(web): add mt5 bridge dashboard`.
 
 ## Task 6: Paper Signal Foundation
 
@@ -104,11 +104,11 @@ Integrate MT5 for XAUUSD only through a Python bridge and Go ingest APIs, then s
 - Create: `services/api/internal/adapters/http/signals_handler.go`
 - Create: `services/api/migrations/000005_create_paper_signals.sql`
 
-- [ ] Add paper signal schema.
-- [ ] Add signal domain model with status lifecycle.
-- [ ] Add `POST /api/paper-signals`.
-- [ ] Add `GET /api/paper-signals`.
-- [ ] Add `PATCH /api/paper-signals/{id}/status`.
-- [ ] Ensure no execution command is created.
-- [ ] Run `go test ./...`.
+- [x] Add paper signal schema.
+- [x] Add signal domain model with status lifecycle.
+- [x] Add `POST /api/paper-signals`.
+- [x] Add `GET /api/paper-signals`.
+- [x] Add `PATCH /api/paper-signals/{id}/status`.
+- [x] Ensure no execution command is created.
+- [x] Run `go test ./...`.
 - [ ] Commit with message `feat(signals): add xauusd paper signals`.

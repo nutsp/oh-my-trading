@@ -43,6 +43,7 @@ func TestRunMigrationsCreatesInitialSchema(t *testing.T) {
 	assertTableExists(t, ctx, db, "mt5_ticks")
 	assertTableExists(t, ctx, db, "mt5_account_snapshots")
 	assertTableExists(t, ctx, db, "mt5_position_snapshots")
+	assertTableExists(t, ctx, db, "paper_signals")
 	assertTimescaleExtensionExists(t, ctx, db)
 	assertCandlesIsHypertable(t, ctx, db)
 }
@@ -55,6 +56,7 @@ func resetMigrationState(t *testing.T, ctx context.Context, db *sql.DB) {
 		"DROP TABLE IF EXISTS mt5_account_snapshots",
 		"DROP TABLE IF EXISTS mt5_ticks",
 		"DROP TABLE IF EXISTS mt5_bridge_heartbeats",
+		"DROP TABLE IF EXISTS paper_signals",
 		"DROP TABLE IF EXISTS candles",
 		"DROP TABLE IF EXISTS symbols",
 		"DROP TABLE IF EXISTS schema_migrations",

@@ -19,6 +19,7 @@ import (
 	"github.com/sutad-p/oh-my-trading/services/api/internal/adapters/postgres"
 	"github.com/sutad-p/oh-my-trading/services/api/internal/application/marketdata"
 	appmt5 "github.com/sutad-p/oh-my-trading/services/api/internal/application/mt5"
+	appsignals "github.com/sutad-p/oh-my-trading/services/api/internal/application/signals"
 	"github.com/sutad-p/oh-my-trading/services/api/internal/platform/config"
 	"github.com/sutad-p/oh-my-trading/services/api/internal/platform/logger"
 )
@@ -57,6 +58,7 @@ func main() {
 			httpadapter.WithCandleService(marketdata.NewCandleService(candleRepo)),
 			httpadapter.WithIndicatorService(marketdata.NewIndicatorService(candleRepo, time.Now)),
 			httpadapter.WithMT5Service(appmt5.NewService(mt5Repo, symbolRepo, candleRepo)),
+			httpadapter.WithSignalService(appsignals.NewService(postgres.NewPaperSignalRepository(db), uuid.NewString)),
 		)
 	}
 
