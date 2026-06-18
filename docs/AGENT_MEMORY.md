@@ -7,7 +7,7 @@ Update this file when an important decision, constraint, milestone, or handoff s
 ## Current State
 
 - Current MVP focus has pivoted to **XAUUSD only, MT5 read-only integration, and paper signals first**.
-- Project is in planning and scaffold phase.
+- Project has a working MT5 XAUUSD read-only + paper-signal MVP foundation.
 - Repository structure has been created according to the recommended folder structure.
 - Repository structure has been cleaned so project documents live in their intended folders.
 - Core documentation has been split into product, architecture, database, API, and implementation task files.
@@ -22,6 +22,11 @@ Update this file when an important decision, constraint, milestone, or handoff s
 - Market chart page has been implemented with dynamic symbol route, timeframe selector, lightweight candlestick rendering, candle API integration, and route-level loading/error states.
 - Indicator module has been implemented with EMA, RSI, MACD, ATR domain calculators, `GET /api/indicators`, and chart overlays on the market page.
 - API mock mode has been implemented behind `OMT_API_MOCK_MODE=true` to serve symbols, candles, and indicators without requiring database connectivity.
+- MT5 read-only persistence has been implemented for bridge heartbeats, ticks, account snapshots, and position snapshots.
+- MT5 application and HTTP ingest APIs have been implemented for XAUUSD-only read-only data.
+- Python MT5 bridge skeleton has been implemented with dry-run payload generation and an optional `MetaTrader5` adapter boundary.
+- MT5 dashboard page has been implemented at `/mt5` with bridge health, tick/spread, account snapshot, and positions panels.
+- XAUUSD paper signal foundation has been implemented with schema, lifecycle statuses, and HTTP APIs.
 - Task 1 has been committed as `fd4f633` with message `chore: add project scaffold`.
 - Task 2 local infrastructure has been implemented and verified healthy with Docker Compose.
 
@@ -85,9 +90,10 @@ Primary documents:
 
 Next recommended task:
 
-- Pause generic market-structure work.
-- Clean/commit or deliberately set aside current uncommitted Task 9/10 draft.
-- Start `Task 1: MT5 Database Schema` from `docs/runbooks/mt5-xauusd-mvp-tasks.md`.
+- Test the Python bridge against a real MT5 terminal using XAUUSD demo data.
+- Seed or create the `XAUUSD` symbol before sending MT5 candle batches.
+- Improve empty/latest-data behavior for `GET /api/mt5/status` if the dashboard should show `204`/empty state instead of a backend `500` before the first heartbeat.
+- Continue with broker-safe paper signal review UX before any auto-trading work.
 
 Current scaffold exists:
 
@@ -154,3 +160,11 @@ Before implementing code:
   - `docs/product/mt5-xauusd-mvp.md`
   - `docs/architecture/mt5-integration.md`
   - `docs/runbooks/mt5-xauusd-mvp-tasks.md`
+- Preserved previous dashboard progress and pushed `main` to `origin`.
+- Implemented MT5 MVP Task 1 read-only schema and PostgreSQL repository; committed as `12ea7ef`.
+- Implemented MT5 MVP Task 2 XAUUSD ingest domain/application service; committed as `9beb160`.
+- Implemented MT5 MVP Task 3 HTTP ingest/read API; committed as `2d4c857`.
+- Implemented MT5 MVP Task 4 Python bridge skeleton with dry-run tests; committed as `863baae`.
+- Implemented MT5 MVP Task 5 dashboard page at `/mt5`; committed as `c46696e`.
+- Implemented MT5 MVP Task 6 XAUUSD paper signals; committed as `5c4d66d`.
+- Verified final state with `go test ./...`, `PYTHONPATH=src python3 -m unittest discover -s tests`, and `npm test && npm run typecheck && npm run build`.
