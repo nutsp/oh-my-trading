@@ -31,7 +31,9 @@ Read these documents in order:
 7. [Database Design](./architecture/database.md)
 8. [API Spec](../packages/shared/openapi/api-spec.md)
 9. [MT5 XAUUSD MVP Tasks](./runbooks/mt5-xauusd-mvp-tasks.md)
-10. [Implementation Tasks](./runbooks/implementation-tasks.md)
+10. [MT5 XAUUSD Next Tasks](./runbooks/mt5-xauusd-next-tasks.md)
+11. [MT5 XAUUSD Next Implementation Plan](./superpowers/plans/2026-06-18-mt5-xauusd-next-implementation.md)
+12. [Implementation Tasks](./runbooks/implementation-tasks.md)
 
 ## Repository Map
 
@@ -74,7 +76,9 @@ Use this table to choose the right document before editing.
 | Backend architecture changes | [System Overview](./architecture/system-overview.md) |
 | Database schema or migrations | [Database Design](./architecture/database.md) |
 | API handlers or frontend API client | [API Spec](../packages/shared/openapi/api-spec.md) |
-| Current feature implementation order | [MT5 XAUUSD MVP Tasks](./runbooks/mt5-xauusd-mvp-tasks.md) |
+| Completed MVP foundation tasks | [MT5 XAUUSD MVP Tasks](./runbooks/mt5-xauusd-mvp-tasks.md) |
+| Current feature implementation order | [MT5 XAUUSD Next Tasks](./runbooks/mt5-xauusd-next-tasks.md) |
+| Detailed next implementation plan | [MT5 XAUUSD Next Implementation Plan](./superpowers/plans/2026-06-18-mt5-xauusd-next-implementation.md) |
 | Deployment or local infrastructure | [Implementation Tasks](./runbooks/implementation-tasks.md) |
 
 ## Current Build Strategy
@@ -92,7 +96,7 @@ Do not start with microservices. Split market ingestion, agent runtime, and exec
 
 ## Implementation Rule Of Thumb
 
-Current focus is the [MT5 XAUUSD MVP](./product/mt5-xauusd-mvp.md). Follow [MT5 XAUUSD MVP Tasks](./runbooks/mt5-xauusd-mvp-tasks.md) before returning to the broader generic roadmap.
+Current focus is the [MT5 XAUUSD MVP](./product/mt5-xauusd-mvp.md). The MVP foundation tasks are complete; follow [MT5 XAUUSD Next Tasks](./runbooks/mt5-xauusd-next-tasks.md) and the [MT5 XAUUSD Next Implementation Plan](./superpowers/plans/2026-06-18-mt5-xauusd-next-implementation.md) before returning to the broader generic roadmap.
 
 Each task should:
 

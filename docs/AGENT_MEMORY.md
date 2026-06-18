@@ -96,6 +96,8 @@ Next recommended task:
 - The Python bridge can post local sample payloads with `PYTHONPATH=src python3 -m mt5_bridge --post-sample`.
 - Next real integration step is connecting the Python bridge to an actual MT5 demo terminal.
 - Continue with broker-safe paper signal review UX before any auto-trading work.
+- The next implementation tasks are planned in `docs/runbooks/mt5-xauusd-next-tasks.md`.
+- The detailed next implementation plan is `docs/superpowers/plans/2026-06-18-mt5-xauusd-next-implementation.md`.
 
 Current scaffold exists:
 
@@ -172,3 +174,4 @@ Before implementing code:
 - Verified final state with `go test ./...`, `PYTHONPATH=src python3 -m unittest discover -s tests`, and `npm test && npm run typecheck && npm run build`.
 - Added local MT5 smoke-readiness improvements: waiting status response, XAUUSD seed migration, and Python bridge `--post-sample`.
 - Verified local end-to-end sample ingest: health OK, status moved from `waiting_for_bridge` to `connected`, and account/positions/candles were readable from the API.
+- Added the next MT5 XAUUSD implementation plan covering real MT5 demo bridge, data quality, dashboard usability, paper signal review, risk preview, journal, backtesting, and agent self-review.
